@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PL/SQL Topics</title>
+  <link rel="stylesheet" href="dbms.css">
+<body>
+  <header>
+    <h1 style="color:#FF9D23;">PL/SQL Commands</h1>
+    <p>All fundamental PL/SQL commands with purpose, syntax, examples, and output</p>
+
+  </header>
+  <nav id="n1">
+    <a href="home.html" id="n11">Home</a>
+    <a href="sql1.html" id="n11">SQL-1</a>
+    <a href="sql2.html" id="n11">SQL-2</a>
+    <a href="plsql.html" id="n11">PL/SQL</a>
+    <a href="cs.html" id="n11">Case Study</a>
+  </nav>
+
+  <nav class="nnn">
+    <a href="#bs"  id="n">Block Structure</a>
+    <a href="#v"  id="n">Variables</a>
+    <a href="#ae"  id="n">Assignments & Expressions</a>
+    <a href="#trt"    id="n">%type & %rowtype</a>
+    <a href="#cs"    id="n">Control Structure</a>
+    <a href="#c"    id="n">Cursor</a>
+    <a href="#eh"   id="n">Exception</a>
+    <a href="#t"   id="n">Triggers</a>
+  </nav>
+
+  <div class="container">
+
+    <h1>PL/SQL Introduction</h1>
+    <p><strong>PL/SQL (Procedural Language/Structured Query Language)</strong> is Oracle Corporation’s procedural extension for SQL and the Oracle relational database. PL/SQL allows developers to write code in a procedural format, using control structures like loops and conditions along with SQL.</p>
+
+    <h1>Advantages of PL/SQL</h1>
+    <ul>
+      <li><strong>Tight Integration with SQL:</strong> Combines SQL’s data manipulation power with the processing power of procedural languages.</li>
+      <li><strong>Improved Performance:</strong> Blocks of code are sent to the database at once, reducing network traffic.</li>
+      <li><strong>Modular Programming:</strong> Allows the use of procedures, functions, packages, and triggers.</li>
+      <li><strong>Robust Error Handling:</strong> Built-in exception handling helps manage runtime errors effectively.</li>
+      <li><strong>Security:</strong> Supports user privileges and secure program unit execution.</li>
+    </ul>
+
+    <h1> Disadvantages of PL/SQL</h1>
+    <ul>
+      <li><strong>Limited Portability:</strong> PL/SQL is Oracle-specific and not compatible with other database systems like MySQL or SQL Server.</li>
+      <li><strong>Learning Curve:</strong> Requires learning both SQL and procedural concepts.</li>
+      <li><strong>GUI Limitations:</strong> Lacks built-in GUI support; requires integration with other tools for UI development.</li>
+      <li><strong>Resource Intensive:</strong> Complex PL/SQL code can consume more resources if not optimized properly.</li>
+    </ul>
+
+
+    <h1> PL/SQL Architecture</h1>
+    <p>PL/SQL engine executes procedural statements and sends SQL commands to the SQL engine. It supports:</p>
+    <ul>
+      <li><strong>PL/SQL Block Structure</strong></li>
+      <li><strong>Control Structures</strong></li>
+      <li><strong>Exception Handling</strong></li>
+    </ul>
+
+    <h1> PL/SQL Fundamentals</h1>
+    <ul>
+      <li>PL/SQL blocks (Anonymous, Named)</li>
+      <li>Control statements (IF, LOOP, WHILE, FOR)</li>
+      <li>Cursors and Exceptions</li>
+      <li>Stored procedures and functions</li>
+    </ul>
+
+    <h1> Data Types in PL/SQL</h1>
+    <ul>
+      <li><strong>Scalar:</strong> NUMBER, VARCHAR2, DATE, BOOLEAN</li>
+      <li><strong>Composite:</strong> RECORD, TABLE</li>
+      <li><strong>Reference:</strong> REF CURSOR</li>
+    </ul>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="bs"><u>Block Structure</u></h2>
+    <div class="card">
+      <p><strong>Purpose:</strong> Defines the structure of every PL/SQL program unit.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+DECLARE
+  -- variable declarations
+BEGIN
+  -- executable statements
+EXCEPTION
+  -- exception handlers
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  v_message VARCHAR2(50);
+BEGIN
+  v_message := 'Hello from PL/SQL';
+  DBMS_OUTPUT.PUT_LINE(v_message);
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error occurred');
+END;
+      </pre>
+      <div class="output">
+        <strong>Output:</strong>
+        Hello from PL/SQL
+              </div>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="v"><u> Declaring Variables</u></h2>
+    <div class="card">
+        <p><strong>Purpose:</strong> Used to store data values temporarily during PL/SQL block execution.</p>
+        <p><strong>Syntax:</strong></p>
+        <pre>
+  variable_name datatype [ := initial_value ];
+        </pre>
+        <p><strong>Example:</strong></p>
+        <pre>
+  DECLARE
+    v_name VARCHAR2(50);
+    v_total NUMBER := 0;
+    v_today DATE := SYSDATE;
+  BEGIN
+    DBMS_OUTPUT.PUT_LINE('Today is: ' || v_today);
+  END;
+        </pre>
+        <div class="output">
+            <strong>Output:</strong>
+            Today is: 10-APR-2025
+                  </div>
+      </div>
+
+    <div class="card">
+      <h3>Variable Scope & Visibility</h3>
+      <p><strong>Purpose:</strong> Controls where variables can be accessed within nested blocks.</p>
+      <p><strong>Explanation:</strong></p>
+      <ul>
+        <li>Outer block variables can be accessed by inner blocks.</li>
+        <li>Inner block variables cannot be accessed by outer blocks.</li>
+      </ul>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  v_outer NUMBER := 10;
+BEGIN
+  DECLARE
+    v_inner NUMBER := 20;
+  BEGIN
+    DBMS_OUTPUT.PUT_LINE('Outer: ' || v_outer);
+    DBMS_OUTPUT.PUT_LINE('Inner: ' || v_inner);
+  END;
+  -- DBMS_OUTPUT.PUT_LINE(v_inner); -- Error: not accessible here
+END;
+      </pre>
+      <div class="output">
+        <strong>Output:</strong>
+        Outer: 10
+        Inner: 20
+              </div>
+    </div>
+
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="ae"><u>Assignments and Expressions</u></h2>
+    <div class="card">
+      <p><strong>Purpose:</strong> Used to assign values to variables and perform calculations or string manipulations.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+variable_name := expression;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  a NUMBER := 10;
+  b NUMBER := 5;
+  result NUMBER;
+BEGIN
+  result := a + b;
+  DBMS_OUTPUT.PUT_LINE('Result: ' || result);
+END;
+      </pre>
+      <div class="output">
+        <strong>Output:</strong>
+        Result: 15
+              </div>
+    </div>
+
+
+
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="trt"><u>%type & %rowtype</u></h2>
+
+    <div class="card">
+      <h3>1. %TYPE Attribute</h3>
+      <p><strong>Purpose:</strong> Declares a variable with the same data type as a column in a table.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+declared_variable table_name.column_name%TYPE;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  v_name students.name%TYPE;
+BEGIN
+  SELECT name INTO v_name FROM students WHERE student_id = 1;
+  DBMS_OUTPUT.PUT_LINE('Student Name: ' || v_name);
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+Student Name: Rahul
+      </div>
+    <pre id="pre">
+
+
+    </pre>
+      <h3>2. %ROWTYPE Attribute</h3>
+      <p><strong>Purpose:</strong> Declares a variable with the structure of an entire row of a table.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+declared_record table_name%ROWTYPE;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  student_record students%ROWTYPE;
+BEGIN
+  SELECT * INTO student_record FROM students WHERE student_id = 1;
+  DBMS_OUTPUT.PUT_LINE('ID: ' || student_record.student_id);
+  DBMS_OUTPUT.PUT_LINE('Name: ' || student_record.name);
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+ID: 1
+Name: Rahul
+      </div>
+    </div>
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="cs"><u>Control Structures</u></h2>
+
+    <div class="card">
+      <div class="card">
+      <h2>1. Conditional Control</h2>
+      <p><strong>Purpose:</strong> To control the flow of execution based on conditions.</p>
+
+      <h3>IF-THEN-END IF</h3>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+IF condition THEN
+  -- statements
+END IF;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  salary NUMBER := 6000;
+BEGIN
+  IF salary > 5000 THEN
+    DBMS_OUTPUT.PUT_LINE('Salary is above 5000');
+  END IF;
+END;
+      </pre> 
+      <div class="output">
+        <strong>Output:</strong>
+  Salary is above 5000
+      </div>
+      <pre id="pre">
+
+
+      </pre>
+
+      <h3>IF-THEN-ELSE-END IF</h3>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+IF condition THEN
+  -- statements
+ELSE
+  -- statements
+END IF;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  salary NUMBER := 4000;
+BEGIN
+  IF salary > 5000 THEN
+    DBMS_OUTPUT.PUT_LINE('High Salary');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Low Salary');
+  END IF;
+END;
+      </pre>
+      
+<div class="output">
+  <strong>Output:</strong>
+  Low Salary
+</div>
+<pre id="pre">
+
+
+</pre>
+      
+
+      <h3>IF-THEN-ELSIF-END IF</h3>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+IF condition1 THEN
+  -- statements
+ELSIF condition2 THEN
+  -- statements
+ELSE
+  -- statements
+END IF;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  marks NUMBER := 88;
+BEGIN
+  IF marks >= 90 THEN
+    DBMS_OUTPUT.PUT_LINE('Grade A');
+  ELSIF marks >= 75 THEN
+    DBMS_OUTPUT.PUT_LINE('Grade B');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Grade C');
+  END IF;
+END;
+      </pre>
+      <div class="output">
+        <strong>Output:</strong>
+        Grade B
+      </div>
+    </div>
+
+
+      <pre id="pre">
+
+
+      </pre>
+      <div class="card">
+        <h2>2. CASE Expression</h2>
+        <p><strong>Purpose:</strong> Used to implement conditional logic in expressions.</p>
+        <p><strong>Syntax:</strong></p>
+      <pre>
+        CASE selector
+        WHEN 'value1' THEN result1
+        WHEN 'value2' THEN result2
+        ...
+        ELSE resultN
+      END CASE;
+      </pre>
+      <p><strong>Example:</strong></p>
+        <pre>
+  DECLARE
+    grade CHAR(1) := 'B';
+  BEGIN
+    CASE grade
+      WHEN 'A' THEN DBMS_OUTPUT.PUT_LINE('Excellent');
+      WHEN 'B' THEN DBMS_OUTPUT.PUT_LINE('Very Good');
+      WHEN 'C' THEN DBMS_OUTPUT.PUT_LINE('Good');
+      ELSE DBMS_OUTPUT.PUT_LINE('Needs Improvement');
+    END CASE;
+  END;
+        </pre>
+        <div class="output"><strong>Output:</strong>  Very Good
+        </div>
+       
+      </div>
+  
+
+      <pre id="pre">
+
+
+      </pre>
+      <div class="card">
+        <h2>3. Loop/Iterative Control</h2>
+        <h3>Simple LOOP</h3>
+        <p><strong>Purpose:</strong> Repeats a block of statements an indefinite number of times.</p>
+        <p><strong>Syntax:</strong></p>
+      <pre>
+        LOOP
+  statements;
+  EXIT WHEN condition;
+END LOOP;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+        DECLARE
+          i NUMBER := 1;
+        BEGIN
+          LOOP
+            EXIT WHEN i > 5;
+            DBMS_OUTPUT.PUT_LINE('Iteration: ' || i);
+            i := i + 1;
+          END LOOP;
+        END;
+              </pre>
+       
+        <div class="output"><strong>Output:</strong>
+          <pre>
+            Iteration: 1 
+            Iteration: 2
+            Iteration: 3
+            Iteration: 4
+            Iteration: 5
+                  </pre>
+  
+
+      <pre id="pre">
+
+
+      </pre>
+        <h3>WHILE LOOP</h3>
+        <p><strong>Purpose:</strong> Repeats a block of statements while a condition is true.</p>
+        <p><strong>Syntax:</strong></p>
+      <pre>
+        WHILE condition LOOP
+  statements;
+END LOOP;
+      </pre>
+      <p><strong>Example:</strong></p>
+        <pre>
+  DECLARE
+    i NUMBER := 1;
+  BEGIN
+    WHILE i <= 3 LOOP
+      DBMS_OUTPUT.PUT_LINE('Count: ' || i);
+      i := i + 1;
+    END LOOP;
+  END;
+        </pre>
+        <div class="output"><strong>Output:</strong></div>
+        <pre>
+  Count: 1
+  Count: 2
+  Count: 3
+        </pre>
+      
+
+
+      <pre id="pre">
+
+
+      </pre>
+        <h3>FOR LOOP</h3>
+        <p><strong>Purpose:</strong> Iterates over a specific range.</p>
+        <p><strong>Syntax:</strong></p>
+      <pre>
+        FOR counter IN [REVERSE] lower_bound..upper_bound LOOP
+        statements;
+      END LOOP;
+      </pre>
+      <p><strong>Example:</strong></p>
+        
+        <pre>
+  BEGIN
+    FOR i IN 1..3 LOOP
+      DBMS_OUTPUT.PUT_LINE('Step: ' || i);
+    END LOOP;
+  END;
+        </pre>
+        <div class="output"><strong>Output:</strong></div>
+        <pre>
+  Step: 1
+  Step: 2
+  Step: 3
+        </pre>
+      </div>
+      </div>
+      
+      <pre id="pre">
+
+
+      </pre>
+      <div class="card">
+        <h2>4. Squential Control</h2>
+        <h3>GOTO Statement</h3>
+        <p><strong>Purpose:</strong> Transfers control to a labeled statement.</p>
+        <p><strong>Syntax:</strong></p>
+        <pre>
+          GOTO label_name;
+          <<label_name>>
+            statements;
+                </pre>
+      <p><strong>Example:</strong></p>
+        <pre>
+  DECLARE
+    x NUMBER := 1;
+  BEGIN
+    IF x = 1 THEN
+      GOTO jump_here;
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('This will be skipped');
+    <<jump_here>>
+    DBMS_OUTPUT.PUT_LINE('Landed after GOTO');
+  END;
+        </pre>
+        <div class="output">
+          <strong>Output:</strong>
+  Landed after GOTO
+        </div>
+        <pre id="pre">
+
+
+        </pre>
+  
+        <h3> NULL Statement</h3>
+        <p><strong>Purpose:</strong> Represents a no-operation placeholder in control structures.</p>
+        <p><strong>Syntax:</strong></p>
+        <pre>
+          NULL;
+                </pre>
+      <p><strong>Example:</strong></p>
+        <pre>
+  DECLARE
+    flag BOOLEAN := TRUE;
+  BEGIN
+    IF flag THEN
+      NULL; -- do nothing
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('This will not run');
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('Done');
+  END;
+        </pre>
+        <div class="output">
+          <strong>Output:</strong>
+           Done
+        </div>
+      </div>
+        
+
+    </div>
+
+
+
+
+
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="c"><u>Cursor</u></h2>
+    
+      <p><strong>Purpose:</strong> A cursor is a pointer that allows row-by-row processing of the result set.</p>
+
+
+    <div class="card">
+      <h3>1. Implicit Cursor</h3>
+      <p><strong>Purpose:</strong> Automatically created by Oracle when an SQL statement like INSERT, UPDATE, DELETE or SELECT INTO is executed.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+DECLARE
+  variable_name datatype;
+BEGIN
+  SELECT column INTO variable_name FROM table_name WHERE condition;
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+        DECLARE
+          v_total_students NUMBER;
+        BEGIN
+          SELECT COUNT(*) INTO v_total_students FROM students;
+          DBMS_OUTPUT.PUT_LINE('Total Students: ' || v_total_students);
+        END;
+              </pre>
+      <div class="output">
+<strong>Output: </strong>
+Total Students: 8
+      </div>
+      <pre id="pre">
+
+
+      </pre>
+
+      <h3>2. Explicit Cursor</h3>
+      <p><strong>Purpose:</strong> Declared by the programmer for queries that return more than one row.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+DECLARE
+  CURSOR cursor_name IS select_statement;
+  variable datatype;
+BEGIN
+  OPEN cursor_name;
+  LOOP
+    FETCH cursor_name INTO variable;
+    EXIT WHEN cursor_name%NOTFOUND;
+    -- Processing logic
+  END LOOP;
+  CLOSE cursor_name;
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+        DECLARE
+          CURSOR cur_students IS SELECT name FROM students;
+          v_name students.name%TYPE;
+        BEGIN
+          OPEN cur_students;
+          LOOP
+            FETCH cur_students INTO v_name;
+            EXIT WHEN cur_students%NOTFOUND;
+            DBMS_OUTPUT.PUT_LINE('Student Name: ' || v_name);
+          END LOOP;
+          CLOSE cur_students;
+        END;
+              </pre>
+      <div class="output">
+<strong>Output:</strong>
+Student Name: Aman
+Student Name: Rahul
+Student Name: Priya
+...
+      </div>
+    </div>
+    
+    <pre id="pre">
+
+
+    </pre>
+
+
+  <h2 id="eh"><u>Exception Handling</u></h2>
+    <div class="card">
+      <p><strong>Purpose:</strong> To handle errors that occur during the execution of a PL/SQL block.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+BEGIN
+  -- Code that might raise an exception
+EXCEPTION
+  WHEN exception_name THEN
+    -- Exception handling code
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+BEGIN
+  DBMS_OUTPUT.PUT_LINE(10/0);
+EXCEPTION
+  WHEN ZERO_DIVIDE THEN
+    DBMS_OUTPUT.PUT_LINE('Error: Division by zero not allowed');
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+Error: Division by zero not allowed
+      </div>
+    
+
+    <pre id="pre">
+
+
+    </pre>
+      <h3>1. User-Defined Exception</h3>
+      <p><strong>Purpose:</strong> Allows the programmer to define their own exception based on specific business logic.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+DECLARE
+  exception_name EXCEPTION;
+BEGIN
+  -- Some logic
+  RAISE exception_name;
+EXCEPTION
+  WHEN exception_name THEN
+    -- Handler logic
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  insufficient_salary EXCEPTION;
+  salary NUMBER := 1000;
+BEGIN
+  IF salary < 5000 THEN
+    RAISE insufficient_salary;
+  END IF;
+EXCEPTION
+  WHEN insufficient_salary THEN
+    DBMS_OUTPUT.PUT_LINE('Error: Salary below minimum threshold');
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+Error: Salary below minimum threshold
+      </div>
+      <pre id="pre">
+
+
+      </pre>
+
+      <h3>2. Predefined Exception</h3>
+      <p><strong>Purpose:</strong> Built-in exceptions that are automatically raised during PL/SQL execution.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+BEGIN
+  -- Statements that may raise predefined exceptions
+EXCEPTION
+  WHEN predefined_exception THEN
+    -- Handler logic
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+DECLARE
+  v_name VARCHAR2(50);
+BEGIN
+  SELECT name INTO v_name FROM students WHERE student_id = 1000;
+  DBMS_OUTPUT.PUT_LINE('Student Name: ' || v_name);
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('No such student exists');
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+No such student exists
+      </div>
+    </div>
+
+
+
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="t"><u>Triggers</u></h2>
+
+    <div class="card">
+      <p><strong>Purpose:</strong> A trigger is a stored procedure that automatically runs when an event occurs in the database.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+CREATE [OR REPLACE] TRIGGER trigger_name
+{BEFORE | AFTER | INSTEAD OF} 
+{INSERT | DELETE | UPDATE [OF column_name]} 
+ON table_name 
+[REFERENCING OLD AS old NEW AS new] 
+[FOR EACH ROW] 
+[WHEN (condition)]
+DECLARE
+  -- variable declarations
+BEGIN
+  -- trigger logic
+EXCEPTION
+  -- exception handling
+END;
+      </pre>
+    
+    <pre id="pre">
+
+
+    </pre>
+      <h3>1. Statement-Level Trigger</h3>
+      <p><strong>Purpose:</strong> Executes once for the triggering event, regardless of the number of rows affected.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trigger_name
+BEFORE INSERT ON table_name
+BEGIN
+  -- Trigger logic
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trg_before_insert
+BEFORE INSERT ON employees
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Insert operation triggered');
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+Insert operation triggered
+      </div>
+    
+    <pre id="pre">
+
+
+    </pre>
+      <h3>2. Row-Level Trigger</h3>
+      <p><strong>Purpose:</strong> Executes once for each row affected by the triggering event.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trigger_name
+BEFORE INSERT OR UPDATE ON table_name
+FOR EACH ROW
+BEGIN
+  -- Row-level logic using :NEW and :OLD
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trg_salary_check
+BEFORE INSERT OR UPDATE ON employees
+FOR EACH ROW
+BEGIN
+  IF :NEW.salary < 0 THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Salary cannot be negative');
+  END IF;
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+Error raised if inserted/updated salary is negative
+      </div>
+      <pre id="pre">
+
+
+      </pre>
+      <h3>3. BEFORE Trigger</h3>
+      <p><strong>Purpose:</strong> Executes the trigger action before the triggering DML event occurs.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trigger_name
+BEFORE INSERT OR UPDATE ON table_name
+FOR EACH ROW
+BEGIN
+  -- Action before insert or update
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trg_check_name
+BEFORE INSERT ON students
+FOR EACH ROW
+BEGIN
+  IF :NEW.name IS NULL THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Name cannot be null');
+  END IF;
+END;
+      </pre>
+      <div class="output">
+        <strong>Output:</strong>
+        Raises an error if the student's name is null before inserting.
+      </div>
+    
+      
+      <pre id="pre">
+
+
+      </pre>
+
+      <h3>4. AFTER Trigger</h3>
+      <p><strong>Purpose:</strong> Executes the trigger action after the triggering DML event has occurred.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trigger_name
+AFTER INSERT OR DELETE ON table_name
+FOR EACH ROW
+BEGIN
+  -- Action after insert or delete
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trg_log_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+  INSERT INTO log_table VALUES(:NEW.id, SYSTIMESTAMP);
+END;
+      </pre>
+      <div class="output">
+        <strong>Output:</strong>
+        Logs inserted employee ID and timestamp after each insert.
+      </div>
+    
+      <pre id="pre">
+
+
+      </pre>
+
+      <h3>5. INSTEAD OF Trigger</h3>
+      <p><strong>Purpose:</strong> Executes instead of the triggering DML statement, typically used with views.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trigger_name
+INSTEAD OF INSERT ON view_name
+BEGIN
+  -- Custom logic to handle insert on view
+END;
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>
+CREATE OR REPLACE TRIGGER trg_view_insert
+INSTEAD OF INSERT ON student_view
+BEGIN
+  INSERT INTO students(id, name) VALUES(:NEW.id, :NEW.name);
+END;
+      </pre>
+      <div class="output">
+<strong>Output:</strong>
+Performs a custom insert into the base table when inserting into a view.
+      </div>
+    </div>
+
+  </div>
+
+  <button id="scrollTopBtn" title="Go to top">↑</button>
+
+  <script>
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      
+      // Show/hide scroll to top button
+      if (scrollTop > 200) {
+        scrollTopBtn.style.display = 'block';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

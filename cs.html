@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Case Study</title>
+  <link rel="stylesheet" href="dbms.css">
+  </head>
+<body>
+  <header>
+    <h1 style="color:#FF9D23;">SQL Case Study</h1>
+  </header>
+  <nav id="n1">
+    <a href="home.html" id="n11">Home</a>
+    <a href="sql1.html" id="n11">SQL-1</a>
+    <a href="sql2.html" id="n11">SQL-2</a>
+    <a href="plsql.html" id="n11">PL/SQL</a>
+    <a href="cs.html" id="n11">Case Study</a>
+  </nav>
+
+  <div class="container">
+    <h1> Case Study: Top 3 Subject-Wise Performers</h1>
+
+    <h3> Student Marks Table</h3>
+    <table>
+      <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>English</th>
+        <th>Hindi</th>
+        <th>Math</th>
+        <th>Science</th>
+        <th>Social Science</th>
+        <th>Total Marks</th>
+      </tr>
+      <tr><td>101</td><td>Aditi</td><td>F</td><td>78</td><td>88</td><td>92</td><td>85</td><td>80</td><td>423</td></tr>
+      <tr><td>102</td><td>Rohan</td><td>M</td><td>65</td><td>75</td><td>84</td><td>70</td><td>90</td><td>384</td></tr>
+      <tr><td>103</td><td>Priya</td><td>F</td><td>55</td><td>70</td><td>45</td><td>60</td><td>75</td><td>305</td></tr>
+      <tr><td>104</td><td>Aman</td><td>M</td><td>95</td><td>90</td><td>96</td><td>92</td><td>88</td><td>461</td></tr>
+      <tr><td>105</td><td>Sneha</td><td>F</td><td>NULL</td><td>89</td><td>91</td><td>93</td><td>87</td><td>360</td></tr>
+      <tr><td>106</td><td>Anuj</td><td>M</td><td>68</td><td>74</td><td>64</td><td>69</td><td>78</td><td>353</td></tr>
+      <tr><td>107</td><td>Kavya</td><td>F</td><td>88</td><td>77</td><td>82</td><td>85</td><td>80</td><td>412</td></tr>
+      <tr><td>108</td><td>Yash</td><td>M</td><td>79</td><td>80</td><td>85</td><td>78</td><td>81</td><td>403</td></tr>
+    </table>
+
+    <pre id="pre">
+
+
+    </pre>
+    <h3>Conditions with SQL Queries and Outputs</h3>
+
+    <div class="card">
+      <h4>Condition 1: Top 3 Positions Overall (All Marks > 60 and No Subject is Failed or Absent)</h4>
+      <pre>
+SELECT Name, TotalMarks,
+  RANK() OVER (ORDER BY TotalMarks DESC) AS OverallRank
+FROM student_marks
+WHERE English > 60 AND Hindi > 60 AND Math > 60 
+  AND Science > 60 AND SocialScience > 60
+  AND English IS NOT NULL AND Hindi IS NOT NULL AND Math IS NOT NULL
+  AND Science IS NOT NULL AND SocialScience IS NOT NULL;
+      </pre>
+      <p><strong>Output:</strong></p>
+      <ul>
+        <li>Rank 1: Aman (461)</li>
+        <li>Rank 2: Aditi (423)</li>
+        <li>Rank 3: Kavya (412)</li>
+      </ul>
+    </div>
+
+
+    <div class="card">
+      <h4>Condition 2: Subject-wise Top 3 Positions (Ties handled using Aggregate Marks)</h4>
+      <pre>
+-- English
+SELECT Name, English, TotalMarks,
+  RANK() OVER (ORDER BY English DESC, TotalMarks DESC) AS RankInEnglish
+FROM student_marks
+WHERE English IS NOT NULL;
+
+-- Hindi
+SELECT Name, Hindi, TotalMarks,
+  RANK() OVER (ORDER BY Hindi DESC, TotalMarks DESC) AS RankInHindi
+FROM student_marks
+WHERE Hindi IS NOT NULL;
+
+-- Math
+SELECT Name, Math, TotalMarks,
+  RANK() OVER (ORDER BY Math DESC, TotalMarks DESC) AS RankInMath
+FROM student_marks
+WHERE Math IS NOT NULL;
+
+-- Science
+SELECT Name, Science, TotalMarks,
+  RANK() OVER (ORDER BY Science DESC, TotalMarks DESC) AS RankInScience
+FROM student_marks
+WHERE Science IS NOT NULL;
+
+-- Social Science
+SELECT Name, SocialScience, TotalMarks,
+  RANK() OVER (ORDER BY SocialScience DESC, TotalMarks DESC) AS RankInSS
+FROM student_marks
+WHERE SocialScience IS NOT NULL;
+      </pre>
+      <p><strong>Output:</strong></p>
+      <ul>
+        <li><strong>English</strong>: Aman (95), Kavya (88), Aditi (78)</li>
+        <li><strong>Hindi</strong>: Aman (90), Aditi (88), Sneha (89)</li>
+        <li><strong>Math</strong>: Aman (96), Aditi (92), Sneha (91)</li>
+        <li><strong>Science</strong>: Aman (92), Sneha (93), Aditi (85)</li>
+        <li><strong>Social Science</strong>: Rohan (90), Aman (88), Sneha (87)</li>
+      </ul>
+    </div>
+
+
+  </div>
+</body>
+</html>

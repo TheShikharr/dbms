@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL-1</title>
+  <link rel="stylesheet" href="dbms.css">
+</head>
+<body>
+  <header>
+    <h1 style="color:#FF9D23;">SQL-1 Commands</h1>
+    <p>All fundamental SQL-1 commands with purpose, syntax, examples, and output</p>
+  </header>
+  <nav id="n1">
+    <a href="home.html" id="n11">Home</a>
+    <a href="sql1.html" id="n11">SQL-1</a>
+    <a href="sql2.html" id="n11">SQL-2</a>
+    <a href="plsql.html" id="n11">PL/SQL</a>
+    <a href="cs.html" id="n11">Case Study</a>
+  </nav>
+  <nav>
+    <a href="#ddl"  id="n">DDL</a>
+    <a href="#dml"  id="n">DML</a>
+    <a href="#dcl"  id="n">DCL</a>
+    <a href="#tcl"  id="n">TCL</a>
+    <a href="#cc"   id="n">Contraints</a>
+    <a href="#k"    id="n">Keywords</a>
+    <a href="#c"    id="n">Clauses</a>
+    <a href="#v"    id="n">Views</a>
+    <a href="#d"    id="n">Date Functions</a>
+    <a href="#af"   id="n">Aggregate Function</a>
+    <a href="#wc"   id="n">Wildcards</a>
+  </nav>
+
+  
+  <div id="home" class="container">
+    <div class="intro">
+      <h1>Introduction to SQL-1</h1>
+      <p>
+        <strong>SQL-1</strong> refers to the basic set of SQL (Structured Query Language) commands used to interact with databases.
+        These commands allow users to select, filter, sort, and limit the data stored in tables.
+      </p>
+      <p>
+        SQL-1 is typically the first level of SQL that beginners learn, as it covers the fundamental skills needed to retrieve data
+        from relational databases.
+      </p>
+      <p><strong>Common SQL-1 Commands include:</strong></p>
+      <ul>
+        <li><strong>SELECT</strong> – Retrieve data from one or more columns</li>
+        <li><strong>FROM</strong> – Specify the table</li>
+        <li><strong>WHERE</strong> – Filter rows based on conditions</li>
+        <li><strong>ORDER BY</strong> – Sort the results</li>
+        <li><strong>LIMIT</strong> – Limit the number of results</li>
+      </ul>
+      <p>
+        Below are examples of these commands in action, with output displayed as cards for better visualization.
+      </p>
+    </div>
+     </div>
+
+  <div id="sql1" class="container">
+    <h1>SQL-1 Commands</h1>
+    <h2 id="ddl"><u>DDL Commands</u></h2>
+
+    <div class="card">
+      <h3>CREATE TABLE</h3>
+      <p><strong>Purpose:</strong> Create a new table in the database</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>CREATE TABLE table_name (column1 datatype, column2 datatype);</pre>
+      <p><strong>Example:</strong></p>
+      <pre>CREATE TABLE students (id INT, name TEXT, age INT);</pre>
+      <p><strong>Output:</strong> Table created</p>
+    </div>
+
+    <div class="card">
+      <h3>DROP TABLE</h3>
+      <p><strong>Purpose:</strong> Delete an existing table and its data</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>DROP TABLE table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>DROP TABLE students;</pre>
+      <p><strong>Output:</strong> Table dropped</p>
+    </div>
+
+    <div class="card">
+      <h3>ALTER TABLE</h3>
+      <p><strong>Purpose:</strong> Modify an existing table (e.g., add or delete a column)</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>ALTER TABLE table_name ADD column_name datatype;
+ALTER TABLE table_name DROP COLUMN column_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>ALTER TABLE students ADD email TEXT;</pre>
+      <p><strong>Output:</strong> Column added to table</p>
+    </div>
+
+
+
+    <div class="card">
+      <h3>TRUNCATE</h3>
+      <p><strong>Purpose:</strong> Removes all rows from a table, but the table structure remains</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>TRUNCATE TABLE table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>TRUNCATE TABLE students;</pre>
+      <p><strong>Output:</strong> All data in the students table is deleted, but the table still exists</p>
+    </div>
+
+    <div class="card">
+      <h3>RENAME</h3>
+      <p><strong>Purpose:</strong> Changes the name of a table</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>ALTER TABLE old_table_name RENAME TO new_table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>ALTER TABLE students RENAME TO learners;</pre>
+      <p><strong>Output:</strong> The table 'students' is renamed to 'learners'</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="dml"><u>DML Commands</u></h2>
+
+
+    <div class="card">
+      <h3>SELECT</h3>
+      <p><strong>Purpose:</strong> Retrieve data from a table</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column1, column2 FROM table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT name, age FROM students;</pre>
+      <p><strong>Output:</strong> List of student names and ages</p>
+    </div>
+
+    <div class="card">
+      <h3>INSERT</h3>
+      <p><strong>Purpose:</strong> Insert new data into a table</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>INSERT INTO table_name (column1, column2) VALUES (value1, value2);</pre>
+      <p><strong>Example:</strong></p>
+      <pre>INSERT INTO students (name, age) VALUES ('Alice', 22);</pre>
+      <p><strong>Output:</strong> 1 row inserted</p>
+    </div>
+
+    <div class="card">
+      <h3>UPDATE</h3>
+      <p><strong>Purpose:</strong> Update existing data in a table</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>UPDATE table_name SET column1 = value1 WHERE condition;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>UPDATE students SET age = 23 WHERE name = 'Alice';</pre>
+      <p><strong>Output:</strong> 1 row updated</p>
+    </div>
+
+    <div class="card">
+      <h3>DELETE</h3>
+      <p><strong>Purpose:</strong> Delete data from a table</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>DELETE FROM table_name WHERE condition;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>DELETE FROM students WHERE name = 'Alice';</pre>
+      <p><strong>Output:</strong> 1 row deleted</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="dcl"><u>DCL Commands</u></h2>
+
+    <div class="card">
+      <h3>GRANT</h3>
+      <p><strong>Purpose:</strong> Provides privileges to users</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>GRANT privilege ON object TO user;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>GRANT SELECT ON students TO user1;</pre>
+      <p><strong>Output:</strong> user1 can now select data from students table</p>
+    </div>
+
+    <div class="card">
+      <h3>REVOKE</h3>
+      <p><strong>Purpose:</strong> Removes privileges from users</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>REVOKE privilege ON object FROM user;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>REVOKE SELECT ON students FROM user1;</pre>
+      <p><strong>Output:</strong> user1 can no longer select data from students table</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="tcl"><u>TCL Commands</u></h2>
+    <div class="card">
+      <h3>COMMIT</h3>
+      <p><strong>Purpose:</strong> Saves all changes made in the current transaction</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>COMMIT;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>INSERT INTO students VALUES (6, 'Ravi', 22);
+COMMIT;</pre>
+      <p><strong>Output:</strong> Inserted data is permanently saved</p>
+    </div>
+
+    <div class="card">
+      <h3>ROLLBACK</h3>
+      <p><strong>Purpose:</strong> Undoes changes made in the current transaction</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>ROLLBACK;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>DELETE FROM students WHERE id = 6;
+ROLLBACK;</pre>
+      <p><strong>Output:</strong> Delete action is undone, data is restored</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="cc"><u>Constraints</u></h2>
+
+    <div class="card">
+      <h3>NOT NULL Constraint</h3>
+      <p><strong>Purpose:</strong> Ensures that a column cannot have NULL values.</p>
+      <pre>CREATE TABLE products (
+  product_id INT,
+  name VARCHAR(100) NOT NULL
+);</pre>
+      <p><strong>Output:</strong> Ensures every product must have a name.</p>
+    </div>
+
+    <div class="card">
+      <h3>UNIQUE Constraint</h3>
+      <p><strong>Purpose:</strong> Ensures that all values in a column are different.</p>
+      <pre>CREATE TABLE customers (
+  customer_id INT,
+  phone_number VARCHAR(15) UNIQUE
+);</pre>
+      <p><strong>Output:</strong> Prevents duplicate phone numbers.</p>
+    </div>
+
+    <div class="card">
+      <h3>PRIMARY KEY Constraint</h3>
+      <p><strong>Purpose:</strong> Combines NOT NULL and UNIQUE to uniquely identify a row.</p>
+      <pre>CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  order_date DATE
+);</pre>
+      <p><strong>Output:</strong> Uniquely identifies each order.</p>
+    </div>
+
+    <div class="card">
+      <h3>FOREIGN KEY Constraint</h3>
+      <p><strong>Purpose:</strong> Links two tables by enforcing referential integrity.</p>
+      <pre>CREATE TABLE payments (
+  payment_id INT,
+  order_id INT,
+  FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);</pre>
+      <p><strong>Output:</strong> Ensures order_id exists in the orders table.</p>
+    </div>
+
+    <div class="card">
+      <h3>CHECK Constraint</h3>
+      <p><strong>Purpose:</strong> Ensures values meet a specific condition.</p>
+      <pre>CREATE TABLE employees (
+  emp_id INT,
+  salary DECIMAL(10, 2),
+  CHECK (salary > 0)
+);</pre>
+      <p><strong>Output:</strong> Ensures salary is a positive number.</p>
+    </div>
+
+    <div class="card">
+      <h3>DEFAULT Constraint</h3>
+      <p><strong>Purpose:</strong> Assigns a default value if none is provided.</p>
+      <pre>CREATE TABLE accounts (
+  id INT,
+  status VARCHAR(10) DEFAULT 'active'
+);</pre>
+      <p><strong>Output:</strong> New accounts get 'active' as the default status.</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="k"><u>Keywords</u></h2>
+    <div class="card">
+      <h3>DISTINCT Keyword</h3>
+      <p><strong>Purpose:</strong> Removes duplicate values from the result set.</p>
+      <pre>SELECT DISTINCT department FROM employees;</pre>
+      <p><strong>Output:</strong> List of unique departments.</p>
+    </div>
+
+    <div class="card">
+      <h3>BETWEEN Keyword</h3>
+      <p><strong>Purpose:</strong> Filters results within a specified range.</p>
+      <pre>SELECT * FROM products WHERE price BETWEEN 100 AND 500;</pre>
+      <p><strong>Output:</strong> Products priced between 100 and 500.</p>
+    </div>
+
+    <div class="card">
+      <h3>IN Keyword</h3>
+      <p><strong>Purpose:</strong> Matches any value within a list.</p>
+      <pre>SELECT * FROM employees WHERE department IN ('HR', 'Sales');</pre>
+      <p><strong>Output:</strong> Employees in HR or Sales.</p>
+    </div>
+
+    <div class="card">
+      <h3>IS NULL Keyword</h3>
+      <p><strong>Purpose:</strong> Checks if a column has NULL value.</p>
+      <pre>SELECT * FROM employees WHERE manager_id IS NULL;</pre>
+      <p><strong>Output:</strong> Lists employees who do not have a manager assigned.</p>
+    </div>
+
+    <div class="card">
+      <h3>IS NOT NULL Keyword</h3>
+      <p><strong>Purpose:</strong> Checks if a column does not have NULL value.</p>
+      <pre>SELECT * FROM employees WHERE manager_id IS NOT NULL;</pre>
+      <p><strong>Output:</strong> Lists employees who have a manager assigned.</p>
+    </div>
+
+
+    <pre id="pre">
+
+
+    </pre>
+
+
+    <h2 id="c"><u>Clauses</u></h2>
+    <div class="card">
+      <h3>WHERE</h3>
+      <p><strong>Purpose:</strong> Filters records that meet a specific condition</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column1 FROM table_name WHERE condition;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT * FROM students WHERE age > 20;</pre>
+      <p><strong>Output:</strong> Students older than 20</p>
+    </div>
+
+    <div class="card">
+      <h3>GROUP BY</h3>
+      <p><strong>Purpose:</strong> Groups rows that have the same values into summary rows</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column, COUNT(*) FROM table_name GROUP BY column;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT age, COUNT(*) FROM students GROUP BY age;</pre>
+      <p><strong>Output:</strong> Number of students per age</p>
+    </div>
+
+    <div class="card">
+      <h3>HAVING</h3>
+      <p><strong>Purpose:</strong> Filters groups based on a condition (used with GROUP BY)</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column, COUNT(*) FROM table_name GROUP BY column HAVING COUNT(*) > 1;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT age, COUNT(*) FROM students GROUP BY age HAVING COUNT(*) > 1;</pre>
+      <p><strong>Output:</strong> Ages with more than one student</p>
+    </div>
+
+    <div class="card">
+      <h3>ORDER BY</h3>
+      <p><strong>Purpose:</strong> Sorts the result set in ascending or descending order</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column1 FROM table_name ORDER BY column1 [ASC|DESC];</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT name, age FROM students ORDER BY age DESC;</pre>
+      <p><strong>Output:</strong> Students sorted by age descending</p>
+    </div>
+
+    <div class="card">
+      <h3>LIMIT</h3>
+      <p><strong>Purpose:</strong> Specifies the number of records to return</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column1 FROM table_name LIMIT number;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT * FROM students LIMIT 3;</pre>
+      <p><strong>Output:</strong> First 3 student records</p>
+    </div>
+
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="v"><u>Views</u></h2>
+  
+    <div class="card">
+      <h3>VIEW</h3>
+      <p><strong>Purpose:</strong> Creates a virtual table based on the result set of a SELECT query</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>CREATE VIEW view_name AS SELECT column1 FROM table_name WHERE condition;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>CREATE VIEW student_view AS SELECT name, age FROM students WHERE age > 18;</pre>
+      <p><strong>Output:</strong> A virtual table with students older than 18</p>
+    </div>
+
+    <div class="card">
+      <h3>DELETE VIEW</h3>
+      <p><strong>Purpose:</strong> Deletes an existing view from the database</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>DROP VIEW view_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>DROP VIEW student_view;</pre>
+      <p><strong>Output:</strong> The view named 'student_view' is removed from the database</p>
+    </div>
+
+
+   
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="d"><u>DATE FUNCTION</u></h2>
+    <div class="card">
+      <h3>DATE FUNCTION</h3>
+      <p><strong>Purpose:</strong> Used to work with date values in SQL</p>
+      <p><strong>Common Functions:</strong></p>
+      <pre>
+CURRENT_DATE       -- returns current date
+CURRENT_TIME       -- returns current time
+CURRENT_TIMESTAMP  -- returns current date and time
+DATE_PART('year', date) -- extracts part of a date
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT CURRENT_DATE;
+SELECT DATE_PART('year', '2024-04-06');</pre>
+      <p><strong>Output:</strong> Current date and extracted year (e.g., 2024)</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="af"><u>Aggregate Functions</u></h2>
+
+
+    <div class="card">
+      <h3>COUNT()</h3>
+      <p><strong>Purpose:</strong> Returns the number of rows that match a condition</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT COUNT(column_name) FROM table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT COUNT(*) FROM students;</pre>
+      <p><strong>Output:</strong> Number of students</p>
+    </div>
+
+    <div class="card">
+      <h3>SUM()</h3>
+      <p><strong>Purpose:</strong> Returns the total sum of a numeric column</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT SUM(column_name) FROM table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT SUM(age) FROM students;</pre>
+      <p><strong>Output:</strong> Total of student ages</p>
+    </div>
+
+    <div class="card">
+      <h3>AVG()</h3>
+      <p><strong>Purpose:</strong> Returns the average value of a numeric column</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT AVG(column_name) FROM table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT AVG(age) FROM students;</pre>
+      <p><strong>Output:</strong> Average student age</p>
+    </div>
+
+    <div class="card">
+      <h3>MIN()</h3>
+      <p><strong>Purpose:</strong> Returns the smallest value in a column</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT MIN(column_name) FROM table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT MIN(age) FROM students;</pre>
+      <p><strong>Output:</strong> Youngest student's age</p>
+    </div>
+
+    <div class="card">
+      <h3>MAX()</h3>
+      <p><strong>Purpose:</strong> Returns the largest value in a column</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT MAX(column_name) FROM table_name;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT MAX(age) FROM students;</pre>
+      <p><strong>Output:</strong> Oldest student's age</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="wc"><u>Wildcard Characters</u></h2>
+    <div class="card">
+      <h3>LIKE Operator</h3>
+      <p><strong>Purpose:</strong> Used to search for a specified pattern in a column</p>
+      <p><strong>Wildcard Characters:</strong></p>
+      <pre>
+%  - represents zero, one, or multiple characters
+_  - represents a single character
+      </pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT * FROM students WHERE name LIKE 'A%';
+SELECT * FROM students WHERE name LIKE '_a%';</pre>
+      <p><strong>Output:</strong> Names that start with 'A' and names where the second letter is 'a'</p>
+    </div>
+
+  </div>
+
+
+  <button id="scrollTopBtn" title="Go to top">↑</button>
+
+  <script>
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      
+      // Show/hide scroll to top button
+      if (scrollTop > 200) {
+        scrollTopBtn.style.display = 'block';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>

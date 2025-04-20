@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dbms.css">
+  <title>SQL-2 Commands</title>
+</head>
+<body>
+  <header>
+    <h1 style="color:#FF9D23;">SQL-2 Commands</h1>
+    <p>All fundamental SQL-2 commands with purpose, syntax, examples, and output</p>
+  </header>
+  <nav id="n1">
+    <a href="home.html" id="n11">Home</a>
+    <a href="sql1.html" id="n11">SQL-1</a>
+    <a href="sql2.html" id="n11">SQL-2</a>
+    <a href="plsql.html" id="n11">PL/SQL</a>
+    <a href="cs.html" id="n11">Case Study</a>
+  </nav>
+  <nav>
+    <a href="#J"   id="n">Joins</a>
+    <a href="#so"  id="n">SET Operator</a>
+    <a href="#nq"  id="n">Nested Queries</a>
+  </nav>
+
+  <div class="container">
+    <div class="intro">
+    <h1>Introduction to SQL-2</h1>
+
+    <p><strong>SQL-2</strong>, also known as Advanced SQL, extends the features of SQL-1 by including more sophisticated operations such as joins, subqueries, constraints, and user access control. It is widely used in enterprise-level databases for enhanced querying, better data integrity, and security.</p>
+
+    <ul>
+      <li><strong>SQL-1</strong> focuses on basic data manipulation — SELECT, INSERT, UPDATE, DELETE, Constraints, Keys, Views, and Transaction Controls (e.g., COMMIT, ROLLBACK). etc.</li>
+      <li><strong>SQL-2</strong> includes complex features like JOINs, SET Operator, Nested Queries.</li>
+    </ul>
+
+    <p>Below are some commonly used SQL-2 commands along with their purpose, syntax, examples, and expected outputs.</p>
+    </div>
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h1>Advanced SQL (SQL-2) Commands</h1>
+
+    <h2 id="J"><u>JOINS</u></h2>
+
+    <div class="card">
+      <h3>INNER JOIN</h3>
+      <p><strong>Purpose:</strong> Retrieves matching rows from two or more tables.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT columns FROM table1 INNER JOIN table2 ON table1.id = table2.id;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT students.name, grades.grade
+FROM students
+INNER JOIN grades ON students.id = grades.student_id;</pre>
+      <p><strong>Output:</strong> Shows student names along with their grades.</p>
+    </div>
+
+    <div class="card">
+      <h3>LEFT JOIN</h3>
+      <p><strong>Purpose:</strong> Retrieves all records from the left table, and the matched records from the right table.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT columns FROM table1 LEFT JOIN table2 ON table1.id = table2.id;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT employees.name, departments.dept_name
+FROM employees
+LEFT JOIN departments ON employees.dept_id = departments.id;</pre>
+      <p><strong>Output:</strong> Lists all employees, even those without departments.</p>
+    </div>
+
+    <div class="card">
+      <h3>RIGHT JOIN</h3>
+      <p><strong>Purpose:</strong> Retrieves all records from the right table, and the matched records from the left table.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT columns FROM table1 RIGHT JOIN table2 ON table1.id = table2.id;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT employees.name, departments.dept_name
+FROM employees
+RIGHT JOIN departments ON employees.dept_id = departments.id;</pre>
+      <p><strong>Output:</strong> Lists all departments, even those without employees.</p>
+    </div>
+
+    <div class="card">
+      <h3>FULL OUTER JOIN</h3>
+      <p><strong>Purpose:</strong> Retrieves all records when there is a match in either left or right table.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT columns FROM table1 FULL OUTER JOIN table2 ON table1.id = table2.id;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT students.name, grades.grade
+FROM students
+FULL OUTER JOIN grades ON students.id = grades.student_id;</pre>
+      <p><strong>Output:</strong> Displays all students and grades, including unmatched records from either table.</p>
+    </div>
+
+    <div class="card">
+      <h3>SELF JOIN</h3>
+      <p><strong>Purpose:</strong> Joins a table with itself to compare rows within the same table.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT A.column_name, B.column_name
+FROM table_name A, table_name B
+WHERE condition;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT A.name AS Employee1, B.name AS Employee2
+FROM employees A, employees B
+WHERE A.manager_id = B.id;</pre>
+      <p><strong>Output:</strong> Displays employees along with their managers.</p>
+    </div>
+
+    <div class="card">
+      <h3>CROSS JOIN</h3>
+      <p><strong>Purpose:</strong> Returns the Cartesian product of two tables.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT * FROM table1 CROSS JOIN table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT employees.name, projects.name
+FROM employees
+CROSS JOIN projects;</pre>
+      <p><strong>Output:</strong> Lists all possible combinations of employees and projects.</p>
+    </div>
+
+    <div class="card">
+      <h3>NATURAL JOIN</h3>
+      <p><strong>Purpose:</strong> Automatically joins tables based on columns with the same names and data types in both tables.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT * FROM table1 NATURAL JOIN table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT *
+FROM students
+NATURAL JOIN enrollments;</pre>
+      <p><strong>Output:</strong> Shows combined rows where common columns match.</p>
+    </div>
+
+
+    <div class="card">
+      <h3>EQUI JOIN</h3>
+      <p><strong>Purpose:</strong> Combines rows from two or more tables using equality comparison in the JOIN condition.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT columns FROM table1, table2 WHERE table1.id = table2.id;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT employees.name, departments.dept_name
+FROM employees, departments
+WHERE employees.dept_id = departments.id;</pre>
+      <p><strong>Output:</strong> Shows employees and their corresponding departments.</p>
+    </div>
+
+    <div class="card">
+      <h3>CARTESIAN JOIN</h3>
+      <p><strong>Purpose:</strong> Returns the Cartesian product of rows from the tables (same as CROSS JOIN).</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT * FROM table1, table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT students.name, courses.title
+FROM students, courses;</pre>
+      <p><strong>Output:</strong> Lists all possible combinations of students and courses.</p>
+    </div>
+
+
+    <pre id="pre">
+
+
+    </pre>
+
+    <h2 id="so"><u>SET Operator</u></h2>
+
+    <div class="card">
+      <h3>UNION</h3>
+      <p><strong>Purpose:</strong> Combines the result sets of two or more SELECT statements (removes duplicates).</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column_name FROM table1
+UNION
+SELECT column_name FROM table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT city FROM customers
+UNION
+SELECT city FROM suppliers;</pre>
+      <p><strong>Output:</strong> Returns a distinct list of cities from both customers and suppliers.</p>
+    </div>
+
+    <div class="card">
+      <h3>UNION ALL</h3>
+      <p><strong>Purpose:</strong> Combines the result sets of two SELECT statements including duplicates.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column_name FROM table1
+UNION ALL
+SELECT column_name FROM table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT city FROM customers
+UNION ALL
+SELECT city FROM suppliers;</pre>
+      <p><strong>Output:</strong> Returns all cities from both tables, including duplicates.</p>
+    </div>
+
+    <div class="card">
+      <h3>INTERSECT</h3>
+      <p><strong>Purpose:</strong> Returns common records from two SELECT queries.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column_name FROM table1
+INTERSECT
+SELECT column_name FROM table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT city FROM customers
+INTERSECT
+SELECT city FROM suppliers;</pre>
+      <p><strong>Output:</strong> Returns cities that exist in both customers and suppliers tables.</p>
+    </div>
+
+    <div class="card">
+      <h3>MINUS (EXCEPT in some databases)</h3>
+      <p><strong>Purpose:</strong> Returns records from the first SELECT query that are not present in the second.</p>
+      <p><strong>Syntax:</strong></p>
+      <pre>SELECT column_name FROM table1
+MINUS
+SELECT column_name FROM table2;</pre>
+      <p><strong>Example:</strong></p>
+      <pre>SELECT city FROM customers
+MINUS
+SELECT city FROM suppliers;</pre>
+      <p><strong>Output:</strong> Returns cities that are in customers but not in suppliers.</p>
+    </div>
+
+
+    
+    <pre id="pre">
+
+
+    </pre>
+    <h2 id="nq"><u>Nested Queries</u></h2>
+    <div class="card">
+      <h3>NESTED QUERY 1 - IN Clause</h3>
+      <p><strong>Purpose:</strong> Select records from a table where a column's value matches any value in a subquery result.</p>
+      <pre>SELECT name FROM students
+WHERE id IN (SELECT student_id FROM enrollments WHERE course_id = 101);</pre>
+      <p><strong>Output:</strong> List of students enrolled in course ID 101.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 2 - EXISTS Clause</h3>
+      <p><strong>Purpose:</strong> Select records where a related subquery returns results.</p>
+      <pre>SELECT name FROM students s
+WHERE EXISTS (SELECT * FROM enrollments e WHERE e.student_id = s.id AND e.course_id = 101);</pre>
+      <p><strong>Output:</strong> Students who are enrolled in course ID 101.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 3 - ANY Keyword</h3>
+      <p><strong>Purpose:</strong> Compare a value to any value returned by a subquery.</p>
+      <pre>SELECT name, salary FROM employees
+WHERE salary > ANY (SELECT salary FROM employees WHERE department = 'HR');</pre>
+      <p><strong>Output:</strong> Employees who earn more than at least one HR employee.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 4 - ALL Keyword</h3>
+      <p><strong>Purpose:</strong> Compare a value to all values returned by a subquery.</p>
+      <pre>SELECT name, salary FROM employees
+WHERE salary > ALL (SELECT salary FROM employees WHERE department = 'HR');</pre>
+      <p><strong>Output:</strong> Employees who earn more than every HR employee.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 5 - FROM Clause Subquery</h3>
+      <p><strong>Purpose:</strong> Use a subquery as a derived table in the FROM clause.</p>
+      <pre>SELECT avg_salary.department, avg_salary.avg_sal
+FROM (SELECT department, AVG(salary) AS avg_sal FROM employees GROUP BY department) AS avg_salary
+WHERE avg_salary.avg_sal > 50000;</pre>
+      <p><strong>Output:</strong> Departments with average salary greater than 50,000.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 6 - SELECT in SELECT</h3>
+      <p><strong>Purpose:</strong> Return data using a subquery in the SELECT clause.</p>
+      <pre>SELECT name, (SELECT dept_name FROM departments WHERE departments.id = employees.dept_id) AS department
+FROM employees;</pre>
+      <p><strong>Output:</strong> List of employees with their department names using subquery in SELECT.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 7 - Correlated Subquery</h3>
+      <p><strong>Purpose:</strong> Use subquery that references column from the outer query.</p>
+      <pre>SELECT name, salary FROM employees e1
+WHERE salary > (SELECT AVG(salary) FROM employees e2 WHERE e1.department = e2.department);</pre>
+      <p><strong>Output:</strong> Employees who earn more than the average salary in their own department.</p>
+    </div>
+
+    <div class="card">
+      <h3>NESTED QUERY 8 - Subquery in UPDATE</h3>
+      <p><strong>Purpose:</strong> Use subquery to set new values based on another table.</p>
+      <pre>UPDATE employees
+SET salary = salary * 1.1
+WHERE department = (SELECT id FROM departments WHERE dept_name = 'Sales');</pre>
+      <p><strong>Output:</strong> Increases salary by 10% for employees in the Sales department.</p>
+    </div>
+
+
+  </div>
+
+
+  <button id="scrollTopBtn" title="Go to top">↑</button>
+
+  <script>
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      
+      // Show/hide scroll to top button
+      if (scrollTop > 200) {
+        scrollTopBtn.style.display = 'block';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>
